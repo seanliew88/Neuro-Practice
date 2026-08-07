@@ -1,0 +1,7 @@
+# Local practice history belongs to the player, not the source repository.
+data/performances.json
+data/performances.tmp
+
+# Python cache files are regenerated automatically.
+__pycache__/
+tests/__pycache__/

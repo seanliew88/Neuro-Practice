@@ -1,0 +1,28 @@
+:root { --ink: #f8f0eb; --muted: #aba2a0; --base: #080809; --panel: #16161b; --line: #393840; --red: #ec4b44; --amber: #f59a4b; --serif: Georgia, "Times New Roman", serif; --sans: "Avenir Next", "Trebuchet MS", sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: radial-gradient(circle at 8% 6%, rgba(236, 75, 68, .24), transparent 24rem), radial-gradient(circle at 92% 88%, rgba(245, 154, 75, .16), transparent 28rem), var(--base); font-family: var(--sans); }
+.shell { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
+.eyebrow { margin: 0 0 .65rem; color: var(--red); font-size: .72rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 1.1rem; font: clamp(3.8rem, 10vw, 7rem)/.82 var(--serif); letter-spacing: -.07em; }
+h1 span { color: var(--red); }
+h2 { margin-bottom: 1.4rem; font: 2rem/1 var(--serif); letter-spacing: -.04em; }
+.intro { max-width: 610px; color: var(--muted); font-size: 1.07rem; line-height: 1.6; }
+header { margin-bottom: 5rem; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; }
+.game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.game-card { position: relative; display: grid; grid-template-columns: 2.7rem 1fr auto; gap: 1rem; min-height: 220px; padding: 1.4rem; color: var(--ink); border: 1px solid var(--line); background: linear-gradient(145deg, #1b1b20, #101014); text-decoration: none; transition: transform .18s, border-color .18s; }
+.game-card:hover { transform: translateY(-5px); }
+.game-card.red:hover { border-color: var(--red); }
+.game-card.amber:hover { border-color: var(--amber); }
+.game-number { color: var(--muted); font: 1.15rem var(--serif); }
+.game-copy { align-self: end; }
+.game-copy strong, .game-copy small { display: block; }
+.game-copy strong { margin-bottom: .55rem; font: 2rem/1 var(--serif); }
+.game-copy small { color: var(--muted); line-height: 1.45; }
+.arrow { align-self: end; font-size: 2rem; }
+.red .arrow { color: var(--red); }.amber .arrow { color: var(--amber); }
+.up-next { margin-top: 4rem; padding: 2rem; border-left: 3px solid var(--line); color: var(--muted); background: rgba(255,255,255,.025); }
+.up-next h2 { color: var(--ink); }
+.up-next p:last-child { max-width: 680px; margin: 0; line-height: 1.6; }
+@media (max-width: 700px) { .shell { padding: 3rem 0; }.game-grid { grid-template-columns: 1fr; }.game-card { min-height: 180px; } }

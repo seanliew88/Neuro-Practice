@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070708" />
+    <title>ShapeShift | Cognitive Practice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="home-link" href="/">← NeuroPractice</a>
+        <div>
+          <p class="eyebrow">Cognitive practice lab</p>
+          <h1>Shape<span>Shift</span></h1>
+        </div>
+        <div class="masthead-actions">
+          <p class="masthead-note">Two-rule task switching, one response at a time.</p>
+          <button class="history-button" id="history-button" type="button" hidden>View session history <span>↗</span></button>
+        </div>
+      </header>
+
+      <section id="home-screen" aria-label="Game setup">
+        <div class="setup-grid">
+          <article class="panel mode-panel">
+            <p class="section-label">01 / Select mode</p>
+            <div class="mode-options" role="radiogroup" aria-label="Game mode">
+              <button class="mode-card selected" type="button" data-mode="symbol" role="radio" aria-checked="true">
+                <span class="mode-index">A</span>
+                <span>
+                  <strong>Symbol switch</strong>
+                  <small>Both pairs stay visible. Left: letter rule. Right: number rule.</small>
+                </span>
+              </button>
+              <button class="mode-card" type="button" data-mode="arrow" role="radio" aria-checked="false">
+                <span class="mode-index">B</span>
+                <span>
+                  <strong>Arrow + arithmetic</strong>
+                  <small>Arrow sets: identical or different. Results: odd or even.</small>
+                </span>
+              </button>
+            </div>
+          </article>
+
+          <article class="panel duration-panel">
+            <p class="section-label">02 / Session length</p>
+            <div class="duration-options" role="radiogroup" aria-label="Session duration">
+              <button class="duration selected" type="button" data-duration="60" role="radio" aria-checked="true">1 min</button>
+              <button class="duration" type="button" data-duration="120" role="radio" aria-checked="false">2 min</button>
+              <button class="duration" type="button" data-duration="180" role="radio" aria-checked="false">3 min</button>
+            </div>
+            <p class="duration-copy">Correct answers score +1. Wrong answers score -1.</p>
+            <button class="start-button" id="start-button" type="button">Begin session <span>→</span></button>
+          </article>
+        </div>
+      </section>
+
+      <section id="game-screen" hidden aria-label="Active game">
+        <section class="play-panel panel" aria-live="polite">
+          <div class="play-topline">
+            <div>
+              <p class="section-label" id="task-type">Ready when you are</p>
+              <h2 id="task-prompt">Choose a mode, then begin.</h2>
+            </div>
+            <div class="timer" id="timer">01:00</div>
+          </div>
+
+          <div class="stimulus idle" id="stimulus" aria-label="Game stimulus">
+            <div class="idle-mark">↗</div>
+            <p>Keep your eyes on the rule. The task changes every turn.</p>
+          </div>
+
+          <div class="answer-grid" id="answers" aria-label="Answer options">
+            <button type="button" data-answer="first" disabled><span class="key">←</span><span id="answer-one">First option</span></button>
+            <button type="button" data-answer="second" disabled><span id="answer-two">Second option</span><span class="key">→</span></button>
+          </div>
+          <p class="keyboard-tip">Use <kbd>←</kbd> and <kbd>→</kbd>, or select an answer.</p>
+          <button class="quit-button" id="quit-button" type="button" hidden>Quit this session</button>
+        </section>
+
+        <section class="metrics" aria-label="Live performance">
+          <article><p>Score</p><strong id="score">0</strong></article>
+          <article><p>Attempts</p><strong id="attempts">0</strong></article>
+          <article><p>Accuracy</p><strong id="accuracy">--</strong></article>
+          <article><p>Score / min</p><strong id="cpm">0.0</strong></article>
+        </section>
+
+        <div class="end-actions" id="end-actions" hidden>
+          <button class="start-button" id="play-again" type="button">Play again <span>→</span></button>
+          <button class="back-button" id="return-home" type="button">← Return home</button>
+        </div>
+        <section class="round-summary panel" id="round-summary" hidden>
+          <p class="section-label">Round details</p>
+          <h2>Session recorded</h2>
+          <dl id="summary-details"></dl>
+        </section>
+      </section>
+
+      <section class="history panel" id="history-screen" hidden aria-label="Session history">
+        <div class="history-heading">
+          <div>
+            <p class="section-label">Performance log</p>
+            <h2>Past sessions</h2>
+          </div>
+          <button class="back-button" id="back-to-home" type="button">← Back to home</button>
+        </div>
+        <p id="history-status">Your saved sessions will appear here.</p>
+        <div class="history-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Mode</th><th>Score</th><th>Accuracy</th><th>Score / min</th><th></th></tr></thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <section class="detail-panel" id="history-detail" hidden>
+          <p class="section-label">Round detail</p>
+          <dl id="history-detail-list"></dl>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
