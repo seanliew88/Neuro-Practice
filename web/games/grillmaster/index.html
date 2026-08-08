@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090706" />
+    <title>Grill Master | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="back-link" href="/">← NeuroPractice</a>
+        <div><p class="eyebrow">Divided attention</p><h1>Grill <span>Master</span></h1></div>
+        <div class="masthead-side"><p>Pull every cut in the cooked window. The grill accelerates as the clock runs.</p><button class="history-button" id="history-button" type="button" hidden>Session tracker ↗</button></div>
+      </header>
+
+      <section class="panel setup" id="home-screen" aria-label="Grill Master setup">
+        <p class="eyebrow">Session length</p>
+        <h2>Choose your shift</h2>
+        <div class="duration-options" role="radiogroup" aria-label="Session duration">
+          <button class="duration selected" data-duration="60" type="button" role="radio" aria-checked="true">1 min</button>
+          <button class="duration" data-duration="120" type="button" role="radio" aria-checked="false">2 min</button>
+          <button class="duration" data-duration="180" type="button" role="radio" aria-checked="false">3 min</button>
+        </div>
+        <div class="doneness-legend" aria-label="Doneness guide"><span class="raw-dot">Raw</span><span class="cooked-dot">Cooked</span><span class="burnt-dot">Burnt</span></div>
+        <p class="setup-copy">Each progress bar changes colour. Tap a piece only while it is green; early pulls and charred meat score −1.</p>
+        <button class="primary-button" id="start-button" type="button">Fire up the grill <span>→</span></button>
+      </section>
+
+      <section id="game-screen" hidden aria-label="Grill Master game">
+        <div class="status-row"><span id="timer">01:00</span><span id="session-score">Score 0</span></div>
+        <section class="grill-panel panel">
+          <div class="grill-heading"><div><p class="eyebrow">Live grill</p><p id="grill-message" aria-live="polite">Watch every progress bar.</p></div><span id="grill-load">0 on grill</span></div>
+          <div class="grill" id="grill" aria-label="Interactive grill"></div>
+        </section>
+        <div class="game-actions"><button class="quit-button" id="quit-button" type="button">Quit session</button></div>
+
+        <section class="metrics" aria-label="Live performance">
+          <article><p>Cooked</p><strong id="cooked">0</strong></article>
+          <article><p>Mistakes</p><strong id="mistakes">0</strong></article>
+          <article><p>Accuracy</p><strong id="accuracy">--</strong></article>
+          <article><p>Streak</p><strong id="streak">0</strong></article>
+        </section>
+
+        <section class="round-summary panel" id="round-summary" hidden><p class="eyebrow">Shift details</p><h2>Session recorded</h2><dl id="summary-details"></dl></section>
+        <div class="end-actions" id="end-actions" hidden><button class="primary-button" id="play-again" type="button">Work another shift <span>→</span></button><button class="secondary-button" id="return-home" type="button">← Return home</button></div>
+      </section>
+
+      <section class="panel history" id="history-screen" hidden aria-label="Grill Master session history">
+        <div class="history-heading"><div><p class="eyebrow">Session tracker</p><h2>Past Grill Master shifts</h2></div><button class="secondary-button" id="back-to-home" type="button">← Back to home</button></div>
+        <p id="history-status">Completed Grill Master shifts will appear here.</p>
+        <div class="history-wrap"><table><thead><tr><th>Date</th><th>Cooked</th><th>Accuracy</th><th>Score</th><th></th></tr></thead><tbody id="history-body"></tbody></table></div>
+        <section class="detail-panel" id="history-detail" hidden><p class="eyebrow">Shift detail</p><dl id="history-detail-list"></dl></section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
