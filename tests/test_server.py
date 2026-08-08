@@ -77,6 +77,29 @@ class PerformanceValidationTests(unittest.TestCase):
         self.assertEqual(performance["details"]["bestStreak"], 3)
         self.assertEqual(performance["details"]["resets"], 2)
 
+    # Accept Grill Master's timing, load, and mistake detail metrics.
+    def test_validate_grillmaster_performance(self) -> None:
+        performance = server.validate_performance({
+            "game": "grillmaster",
+            "mode": "classic",
+            "durationSeconds": 120,
+            "correct": 8,
+            "total": 11,
+            "details": {
+                "rawPulled": 1,
+                "charred": 2,
+                "bestStreak": 5,
+                "peakGrillLoad": 7,
+                "totalCookMilliseconds": 57400,
+                "fastestCookMilliseconds": 6100,
+            },
+            "startedAt": "2026-08-08T12:00:00+00:00",
+        })
+
+        self.assertEqual(performance["game"], "grillmaster")
+        self.assertEqual(performance["score"], 5)
+        self.assertEqual(performance["details"]["peakGrillLoad"], 7)
+
     # Keep only the most recent fifty sessions in the local JSON file.
     def test_save_performance_limits_history(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

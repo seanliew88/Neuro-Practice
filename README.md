@@ -1,7 +1,7 @@
 # NeuroPractice
 
 NeuroPractice is a local browser collection of cognitive practice games. It currently
-contains ShapeShift, Tower, and Number Box.
+contains ShapeShift, Tower, Number Box, and Grill Master.
 
 ## Structure
 
@@ -11,6 +11,7 @@ web/
   games/shapeshift/          Task-switching practice game
   games/tower/               Tower-of-Hanoi planning practice game
   games/numberbox/           Four-number arithmetic target game
+  games/grillmaster/         Accelerating grill-management game
 data/                         Local, gitignored performance history
 tests/                        Python persistence tests
 server.py                     Dependency-free local server
@@ -36,4 +37,5 @@ python3 -m unittest discover -s tests -v
 node --check web/games/shapeshift/app.js
 node --check web/games/tower/app.js
 node --check web/games/numberbox/app.js
+node --check web/games/grillmaster/app.js
 ```
