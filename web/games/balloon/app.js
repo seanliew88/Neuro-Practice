@@ -279,7 +279,7 @@ async function finishSession() {
   setFeedback(`Session complete with ${formatMoney(state.grossBankedCents - state.penaltyCents)} net earnings.`, "good");
 
   try {
-    const response = await fetch("/api/performances", {
+    const response = await window.neuroRequest("/api/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -310,11 +310,11 @@ async function finishSession() {
     elements.historyButton.hidden = false;
     await loadHistory();
   } catch (error) {
-    setFeedback(`History was not saved: ${error.message} Restart the Python server and play the session again.`, "bad");
+    setFeedback(`Account history was not saved: ${error.message}`, "bad");
   }
 }
 
-// Exit an unfinished session without writing it to local history.
+// Exit an unfinished session without writing it to account history.
 function quitSession() {
   if (!state.active) return;
   state.active = false;
@@ -342,7 +342,7 @@ function showHome() {
 // Load only Balloon records and render selectable tracker rows.
 async function loadHistory() {
   try {
-    const response = await fetch("/api/performances?game=balloon");
+    const response = await window.neuroRequest("/api/performances?game=balloon");
     if (!response.ok) throw new Error("History unavailable");
     const { performances } = await response.json();
     state.history = performances;
@@ -354,7 +354,7 @@ async function loadHistory() {
     }).join("") : '<tr><td class="empty-row" colspan="5">No completed Balloon sessions yet.</td></tr>';
     elements.historyStatus.textContent = `${performances.length} completed Balloon session${performances.length === 1 ? "" : "s"}.`;
   } catch (error) {
-    elements.historyStatus.textContent = "Balloon history is unavailable. Restart the Python server.";
+    elements.historyStatus.textContent = "Balloon account history is temporarily unavailable.";
   }
 }
 

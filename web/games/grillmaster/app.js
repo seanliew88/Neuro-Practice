@@ -275,7 +275,7 @@ async function finishSession() {
   elements.grill.querySelectorAll("button").forEach((button) => { button.disabled = true; });
 
   try {
-    const response = await fetch("/api/performances", {
+    const response = await window.neuroRequest("/api/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -305,7 +305,7 @@ async function finishSession() {
     elements.historyButton.hidden = false;
     await loadHistory();
   } catch (error) {
-    elements.grillMessage.textContent = `History was not saved: ${error.message} Restart the Python server and play the shift again.`;
+    elements.grillMessage.textContent = `Account history was not saved: ${error.message}`;
   }
 }
 
@@ -337,7 +337,7 @@ function showHome() {
 // Load only Grill Master records and render selectable tracker rows.
 async function loadHistory() {
   try {
-    const response = await fetch("/api/performances?game=grillmaster");
+    const response = await window.neuroRequest("/api/performances?game=grillmaster");
     if (!response.ok) throw new Error("History unavailable");
     const { performances } = await response.json();
     state.history = performances;
@@ -347,7 +347,7 @@ async function loadHistory() {
     }).join("") : '<tr><td class="empty-row" colspan="5">No completed Grill Master shifts yet.</td></tr>';
     elements.historyStatus.textContent = `${performances.length} completed Grill Master shift${performances.length === 1 ? "" : "s"}.`;
   } catch (error) {
-    elements.historyStatus.textContent = "Grill Master history is unavailable. Restart the Python server.";
+    elements.historyStatus.textContent = "Grill Master account history is temporarily unavailable.";
   }
 }
 

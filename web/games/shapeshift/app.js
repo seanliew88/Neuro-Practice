@@ -223,7 +223,7 @@ async function finishSession() {
   updateMetrics();
 
   try {
-    const response = await fetch("/api/performances", {
+    const response = await window.neuroRequest("/api/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -241,11 +241,11 @@ async function finishSession() {
     showRoundSummary(performance);
     await loadHistory();
   } catch (error) {
-    elements.historyStatus.textContent = "Session finished, but local history could not be saved.";
+    elements.historyStatus.textContent = "Session finished, but account history could not be saved.";
   }
 }
 
-// End a practice run without adding incomplete results to local history.
+// End a practice run without adding incomplete results to account history.
 async function quitSession() {
   if (!state.active) return;
   state.active = false;
@@ -294,7 +294,7 @@ function showHome() {
 // Load the most recent local sessions into the separate history view.
 async function loadHistory() {
   try {
-    const response = await fetch("/api/performances?game=shapeshift");
+    const response = await window.neuroRequest("/api/performances?game=shapeshift");
     if (!response.ok) throw new Error("History unavailable");
     const { performances } = await response.json();
     state.history = performances;
@@ -313,7 +313,7 @@ async function loadHistory() {
     });
     elements.historyStatus.textContent = `${performances.length} local session${performances.length === 1 ? "" : "s"} saved.`;
   } catch (error) {
-    elements.historyBody.innerHTML = '<tr><td class="empty-row" colspan="6">Start the Python server to view local history.</td></tr>';
+    elements.historyBody.innerHTML = '<tr><td class="empty-row" colspan="6">Account history is temporarily unavailable.</td></tr>';
     elements.historyStatus.textContent = "History is unavailable.";
   }
 }

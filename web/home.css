@@ -9,6 +9,7 @@ h1 span { color: var(--red); }
 h2 { margin-bottom: 1.4rem; font: 2rem/1 var(--serif); letter-spacing: -.04em; }
 .intro { max-width: 610px; color: var(--muted); font-size: 1.07rem; line-height: 1.6; }
 header { margin-bottom: 5rem; }
+.account-nav { display: flex; justify-content: flex-end; align-items: center; gap: .8rem; min-height: 2.5rem; margin-bottom: 3rem; }.account-nav a, .account-nav button { color: var(--red); font: 800 .72rem var(--sans); letter-spacing: .08em; text-transform: uppercase; }.account-nav a { padding: .65rem .8rem; border: 1px solid var(--red); text-decoration: none; }.account-nav button { padding: .45rem 0; cursor: pointer; border: 0; border-bottom: 1px solid var(--red); background: transparent; }.account-nav span { color: var(--ink); font: 1rem var(--serif); }
 .section-heading { display: flex; justify-content: space-between; align-items: end; }
 .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .game-card { position: relative; display: grid; grid-template-columns: 2.7rem 1fr auto; gap: 1rem; min-height: 220px; padding: 1.4rem; color: var(--ink); border: 1px solid var(--line); background: linear-gradient(145deg, #1b1b20, #101014); text-decoration: none; transition: transform .18s, border-color .18s; }
