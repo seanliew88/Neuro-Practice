@@ -199,6 +199,27 @@ function serializePerformance(row) {
   };
 }
 
+// Return the ISO boundaries for one UTC calendar day.
+function utcDayBounds(now = new Date()) {
+  const date = now.toISOString().slice(0, 10);
+  return { date, start: `${date}T00:00:00.000Z`, end: `${date}T23:59:59.999Z` };
+}
+
+// Expose ranking fields without leaking account IDs or email addresses.
+function serializeRanking(row, currentUserId) {
+  return {
+    position: row.position,
+    displayName: row.display_name,
+    scorePerMinute: row.score_per_minute,
+    accuracy: row.accuracy,
+    score: row.score,
+    correct: row.correct,
+    total: row.total,
+    durationSeconds: row.duration_seconds,
+    isCurrentUser: row.user_id === currentUserId,
+  };
+}
+
 // Count recent failed attempts for one account or source identifier.
 async function loginAllowed(env, identifier, limit, now) {
   const result = await env.DB.prepare(
@@ -329,11 +350,53 @@ async function handlePerformances(request, env, url, session) {
     JSON.stringify(performance.details), performance.startedAt, performance.savedAt,
   ).run();
   await env.DB.prepare(
-    `DELETE FROM performances WHERE user_id = ? AND id IN (
+    `DELETE FROM performances WHERE user_id = ? AND saved_at < ? AND id IN (
        SELECT id FROM performances WHERE user_id = ? ORDER BY saved_at DESC LIMIT -1 OFFSET 50
      )`,
-  ).bind(session.user_id, session.user_id).run();
+  ).bind(session.user_id, utcDayBounds().start, session.user_id).run();
   return json({ performance }, 201);
+}
+
+// Rank each account's best result for one game mode during the current UTC day.
+async function handleRankings(request, env, url, session) {
+  if (!session?.user_id) return json({ error: "Authentication required." }, 401);
+  if (request.method !== "GET") return json({ error: "Method not allowed." }, 405);
+  const game = url.searchParams.get("game");
+  const mode = url.searchParams.get("mode");
+  if (!GAME_RULES[game]) return json({ error: "Unsupported game." }, 400);
+  if (!GAME_RULES[game].modes.has(mode)) return json({ error: "Unsupported game mode." }, 400);
+  const day = utcDayBounds();
+  const result = await env.DB.prepare(
+    `WITH daily AS (
+       SELECT performances.*,
+              ROW_NUMBER() OVER (
+                PARTITION BY user_id
+                ORDER BY score_per_minute DESC, accuracy DESC, score DESC, saved_at ASC
+              ) AS attempt_position
+         FROM performances
+        WHERE game = ? AND mode = ? AND saved_at >= ? AND saved_at <= ?
+     ), ranked AS (
+       SELECT daily.*,
+              ROW_NUMBER() OVER (
+                ORDER BY score_per_minute DESC, accuracy DESC, score DESC, saved_at ASC, user_id ASC
+              ) AS position
+         FROM daily
+        WHERE attempt_position = 1
+     )
+     SELECT ranked.*, users.display_name,
+            (SELECT COUNT(*) FROM ranked) AS player_count
+       FROM ranked JOIN users ON users.id = ranked.user_id
+      WHERE position <= 50 OR ranked.user_id = ?
+      ORDER BY position ASC, saved_at ASC`,
+  ).bind(game, mode, day.start, day.end, session.user_id).all();
+  const rankings = result.results.map((row) => serializeRanking(row, session.user_id));
+  return json({
+    date: day.date,
+    game,
+    mode,
+    playerCount: Number(result.results[0]?.player_count || 0),
+    rankings,
+  }, 200, { "Cache-Control": "private, no-store" });
 }
 
 // Route API requests and guard game assets before delegating to static assets.
@@ -342,11 +405,12 @@ async function handleRequest(request, env) {
   const session = await loadSession(request, env);
   if (url.pathname.startsWith("/api/auth/")) return handleAuth(request, env, url.pathname, session);
   if (url.pathname === "/api/performances") return handlePerformances(request, env, url, session);
+  if (url.pathname === "/api/rankings") return handleRankings(request, env, url, session);
   if (url.pathname === "/health") {
     await env.DB.prepare("SELECT 1").first();
     return json({ status: "ok" });
   }
-  if (url.pathname.startsWith("/games/") && !session?.user_id) {
+  if ((url.pathname.startsWith("/games/") || url.pathname.startsWith("/rankings/")) && !session?.user_id) {
     const next = `${url.pathname}${url.search}`;
     return Response.redirect(`${url.origin}/account/?next=${encodeURIComponent(next)}`, 302);
   }
@@ -367,4 +431,11 @@ export default {
   },
 };
 
-export { constantTimeEqual, readCookie, serializePerformance, validatePerformance };
+export {
+  constantTimeEqual,
+  readCookie,
+  serializePerformance,
+  serializeRanking,
+  utcDayBounds,
+  validatePerformance,
+};

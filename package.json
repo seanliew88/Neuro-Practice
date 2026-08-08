@@ -9,7 +9,7 @@
     "db:migrate:remote": "wrangler d1 migrations apply neuropractice --remote",
     "deploy": "wrangler deploy",
     "test": "node --test tests/*.test.js",
-    "check": "node --check worker/index.js && node --check web/home.js && node --check web/account/app.js && node --check web/shared/auth-client.js && node --check web/games/shapeshift/app.js && node --check web/games/tower/app.js && node --check web/games/numberbox/app.js && node --check web/games/grillmaster/app.js && node --check web/games/balloon/app.js && node --check web/games/figureitout/app.js"
+    "check": "node --check worker/index.js && node --check web/home.js && node --check web/account/app.js && node --check web/rankings/app.js && node --check web/shared/auth-client.js && node --check web/games/shapeshift/app.js && node --check web/games/tower/app.js && node --check web/games/numberbox/app.js && node --check web/games/grillmaster/app.js && node --check web/games/balloon/app.js && node --check web/games/figureitout/app.js"
   },
   "devDependencies": {
     "wrangler": "4.120.0"

@@ -9,6 +9,7 @@ const authState = fetch("/api/auth/me", { headers: { Accept: "application/json" 
     }
     return state;
   });
+window.neuroAuthState = authState;
 
 // Send same-origin API requests with the current session's CSRF token.
 window.neuroRequest = async function neuroRequest(url, options = {}) {
