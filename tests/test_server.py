@@ -124,6 +124,32 @@ class PerformanceValidationTests(unittest.TestCase):
         self.assertEqual(performance["details"]["grossBankedCents"], 475)
         self.assertEqual(performance["accuracy"], 70.0)
 
+    # Accept Figure It Out's deduction and property-match detail metrics.
+    def test_validate_figureitout_performance(self) -> None:
+        performance = server.validate_performance({
+            "game": "figureitout",
+            "mode": "classic",
+            "durationSeconds": 180,
+            "correct": 4,
+            "total": 9,
+            "details": {
+                "totalGuesses": 19,
+                "failedRounds": 2,
+                "skippedRounds": 3,
+                "perfectRounds": 1,
+                "bestRoundGuesses": 1,
+                "totalCorrectProperties": 57,
+                "totalPropertiesTested": 76,
+                "highestFeatureCount": 5,
+            },
+            "startedAt": "2026-08-08T12:00:00+00:00",
+        })
+
+        self.assertEqual(performance["game"], "figureitout")
+        self.assertEqual(performance["accuracy"], 44.4)
+        self.assertEqual(performance["details"]["totalGuesses"], 19)
+        self.assertEqual(performance["details"]["skippedRounds"], 3)
+
     # Keep only the most recent fifty sessions in the local JSON file.
     def test_save_performance_limits_history(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

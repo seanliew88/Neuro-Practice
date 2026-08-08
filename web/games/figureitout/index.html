@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080908" />
+    <title>Figure It Out | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="back-link" href="/">← NeuroPractice</a>
+        <div><p class="eyebrow">Deductive reasoning</p><h1>Figure <span>It Out</span></h1></div>
+        <div class="masthead-side"><p>Recreate all five hidden properties using only aggregate match feedback.</p><button class="history-button" id="history-button" type="button" hidden>Session tracker ↗</button></div>
+      </header>
+
+      <section class="panel setup" id="home-screen" aria-label="Figure It Out setup">
+        <p class="eyebrow">Session length</p>
+        <h2>Choose your deduction window</h2>
+        <div class="duration-options" role="radiogroup" aria-label="Session duration">
+          <button class="duration selected" data-duration="60" type="button" role="radio" aria-checked="true">1 min</button>
+          <button class="duration" data-duration="120" type="button" role="radio" aria-checked="false">2 min</button>
+          <button class="duration" data-duration="180" type="button" role="radio" aria-checked="false">3 min</button>
+          <button class="duration" data-duration="240" type="button" role="radio" aria-checked="false">4 min</button>
+          <button class="duration" data-duration="300" type="button" role="radio" aria-checked="false">5 min</button>
+        </div>
+        <div class="property-preview"><span>Shape</span><span>Colour</span><span>Pattern</span><span>Size</span><span>Border</span></div>
+        <p class="setup-copy">Start with shape and colour. Pattern, size, and border unlock as the session progresses. Guess without a limit or skip a figure when needed.</p>
+        <button class="primary-button" id="start-button" type="button">Start deducing <span>→</span></button>
+      </section>
+
+      <section id="game-screen" hidden aria-label="Figure It Out game">
+        <div class="status-row"><span id="timer">01:00</span><span id="round-count">Round 1</span></div>
+        <section class="figure-board">
+          <article class="panel card-panel"><p class="eyebrow">Hidden figure</p><div class="figure-card" id="hidden-card"><div class="figure-card-inner"><div class="card-face card-back"><span>?</span><small>Face down</small></div><div class="card-face card-front"><div id="hidden-figure"></div><p id="hidden-description"></p></div></div></div></article>
+          <article class="panel card-panel"><p class="eyebrow">Your figure</p><div class="guess-card"><div id="guess-figure"></div></div><p class="attempt-counter" id="attempt-counter">Guess 1 · 2 active properties</p></article>
+        </section>
+
+        <section class="panel controls" aria-label="Figure properties">
+          <p class="feature-progress" id="feature-progress">2 properties active: shape, colour</p>
+          <div class="property-row" data-feature="shape"><span>Shape</span><div role="radiogroup" aria-label="Shape"><button data-property="shape" data-value="circle" type="button" role="radio">Circle</button><button data-property="shape" data-value="square" type="button" role="radio">Square</button><button data-property="shape" data-value="triangle" type="button" role="radio">Triangle</button><button data-property="shape" data-value="diamond" type="button" role="radio">Diamond</button></div></div>
+          <div class="property-row" data-feature="color"><span>Colour</span><div role="radiogroup" aria-label="Colour"><button class="swatch red" data-property="color" data-value="red" type="button" role="radio" aria-label="Red"></button><button class="swatch blue" data-property="color" data-value="blue" type="button" role="radio" aria-label="Blue"></button><button class="swatch yellow" data-property="color" data-value="yellow" type="button" role="radio" aria-label="Yellow"></button><button class="swatch green" data-property="color" data-value="green" type="button" role="radio" aria-label="Green"></button></div></div>
+          <div class="property-row" data-feature="pattern"><span>Pattern</span><div role="radiogroup" aria-label="Pattern"><button data-property="pattern" data-value="solid" type="button" role="radio">Solid</button><button data-property="pattern" data-value="stripes" type="button" role="radio">Stripes</button><button data-property="pattern" data-value="dots" type="button" role="radio">Dots</button><button data-property="pattern" data-value="grid" type="button" role="radio">Grid</button></div></div>
+          <div class="property-row" data-feature="size"><span>Size</span><div role="radiogroup" aria-label="Size"><button data-property="size" data-value="small" type="button" role="radio">Small</button><button data-property="size" data-value="medium" type="button" role="radio">Medium</button><button data-property="size" data-value="large" type="button" role="radio">Large</button></div></div>
+          <div class="property-row" data-feature="border"><span>Border</span><div role="radiogroup" aria-label="Border"><button data-property="border" data-value="none" type="button" role="radio">None</button><button data-property="border" data-value="thin" type="button" role="radio">Thin</button><button data-property="border" data-value="thick" type="button" role="radio">Thick</button></div></div>
+          <p class="feedback" id="feedback" aria-live="polite">Build your first guess from the five property rows.</p>
+          <div class="round-actions"><button class="submit-button" id="submit-button" type="button">Submit guess <span>→</span></button><button class="next-button" id="next-button" type="button" hidden>Next figure <span>→</span></button><button class="skip-button" id="skip-button" type="button">Skip figure</button><button class="quit-button" id="quit-button" type="button">Quit session</button></div>
+        </section>
+
+        <section class="panel guess-log-panel"><div class="log-heading"><p class="eyebrow">Guess log</p><span id="log-status">No guesses yet</span></div><div class="guess-log" id="guess-log"></div></section>
+
+        <section class="metrics" aria-label="Live performance">
+          <article><p>Solved</p><strong id="solved">0</strong></article>
+          <article><p>Total guesses</p><strong id="total-guesses">0</strong></article>
+          <article><p>Property match</p><strong id="property-match">--</strong></article>
+          <article><p>Best solve</p><strong id="best-solve">--</strong></article>
+        </section>
+
+        <section class="round-summary panel" id="round-summary" hidden><p class="eyebrow">Session details</p><h2>Session recorded</h2><dl id="summary-details"></dl></section>
+        <div class="end-actions" id="end-actions" hidden><button class="primary-button" id="play-again" type="button">Play again <span>→</span></button><button class="secondary-button" id="return-home" type="button">← Return home</button></div>
+      </section>
+
+      <section class="panel history" id="history-screen" hidden aria-label="Figure It Out session history">
+        <div class="history-heading"><div><p class="eyebrow">Session tracker</p><h2>Past Figure It Out sessions</h2></div><button class="secondary-button" id="back-to-home" type="button">← Back to home</button></div>
+        <p id="history-status">Completed Figure It Out sessions will appear here.</p>
+        <div class="history-wrap"><table><thead><tr><th>Date</th><th>Solved</th><th>Rounds</th><th>Guesses</th><th></th></tr></thead><tbody id="history-body"></tbody></table></div>
+        <section class="detail-panel" id="history-detail" hidden><p class="eyebrow">Session detail</p><dl id="history-detail-list"></dl></section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

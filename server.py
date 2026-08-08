@@ -21,6 +21,7 @@ GAME_RULES = {
     "numberbox": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
     "grillmaster": {"modes": {"classic"}, "durations": {60, 120, 180}},
     "balloon": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
+    "figureitout": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
 }
 
 
