@@ -1,7 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { constantTimeEqual, readCookie, serializePerformance, validatePerformance } from "../worker/index.js";
+import {
+  constantTimeEqual,
+  readCookie,
+  serializePerformance,
+  serializeRanking,
+  utcDayBounds,
+  validatePerformance,
+} from "../worker/index.js";
 
 // Build one valid ShapeShift payload for scoring tests.
 function validPayload() {
@@ -69,4 +76,39 @@ test("serializes D1 rows to the frontend contract", () => {
   });
   assert.equal(result.durationSeconds, 60);
   assert.deepEqual(result.details, { totalMoves: 12 });
+});
+
+test("builds UTC day boundaries for daily rankings", () => {
+  const day = utcDayBounds(new Date("2026-08-08T23:59:30.000Z"));
+  assert.deepEqual(day, {
+    date: "2026-08-08",
+    start: "2026-08-08T00:00:00.000Z",
+    end: "2026-08-08T23:59:59.999Z",
+  });
+});
+
+test("serializes rankings without account identifiers", () => {
+  const ranking = serializeRanking({
+    position: 2,
+    user_id: "current-user",
+    display_name: "Player Two",
+    score_per_minute: 8.5,
+    accuracy: 91.2,
+    score: 17,
+    correct: 21,
+    total: 25,
+    duration_seconds: 120,
+  }, "current-user");
+  assert.deepEqual(ranking, {
+    position: 2,
+    displayName: "Player Two",
+    scorePerMinute: 8.5,
+    accuracy: 91.2,
+    score: 17,
+    correct: 21,
+    total: 25,
+    durationSeconds: 120,
+    isCurrentUser: true,
+  });
+  assert.equal("userId" in ranking, false);
 });

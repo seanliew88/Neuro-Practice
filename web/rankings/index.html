@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080809" />
+    <title>Daily Rankings | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <nav><a href="/">← NeuroPractice</a><span id="account-name">Loading account</span></nav>
+        <div class="title-row">
+          <div><p class="eyebrow">Today · UTC</p><h1>Daily<br /><em>Rankings</em></h1></div>
+          <p class="intro">Your best attempt in each mode counts. Score per minute leads, then accuracy and raw score break ties.</p>
+        </div>
+      </header>
+
+      <section class="selector-panel" aria-labelledby="ranking-selector-title">
+        <div><p class="eyebrow">Leaderboard</p><h2 id="ranking-selector-title">Choose a game mode</h2></div>
+        <div class="selectors">
+          <label>Game<select id="game-select"></select></label>
+          <label>Mode<select id="mode-select"></select></label>
+        </div>
+      </section>
+
+      <section class="ranking-heading">
+        <div><p class="eyebrow" id="ranking-date">Today</p><h2 id="ranking-title">ShapeShift · Symbol Switch</h2></div>
+        <p id="player-count">Loading rankings</p>
+      </section>
+
+      <section class="podium" id="podium" aria-label="Top three players"></section>
+
+      <section class="your-rank" id="your-rank" hidden aria-live="polite">
+        <span>Your position</span><strong id="your-position">--</strong><p id="your-result"></p>
+      </section>
+
+      <section class="ranking-table" aria-label="Daily ranking table">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Rank</th><th>Player</th><th>Score / min</th><th>Accuracy</th><th>Score</th></tr></thead>
+            <tbody id="ranking-body"></tbody>
+          </table>
+        </div>
+        <p class="status" id="ranking-status" aria-live="polite">Loading today's results.</p>
+      </section>
+    </main>
+    <script src="/shared/auth-client.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
