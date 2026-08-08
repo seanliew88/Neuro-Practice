@@ -1,26 +1,70 @@
 # NeuroPractice
 
-NeuroPractice is an account-based cognitive practice site. It currently contains
-ShapeShift, Tower, Number Box, Grill Master, Balloon, and Figure It Out.
+NeuroPractice is an account-based collection of timed cognitive practice games. Each
+completed session is saved to the player's private history, while daily game-mode
+rankings provide an optional comparison with other players.
 
-## Structure
+## Try It
+
+The production site is available at:
+
+**[Open NeuroPractice](https://neuropractice.seanliew8898.workers.dev)**
+
+Create an account to play, retain performance history across devices, and enter the
+daily rankings.
+
+## Available Games
+
+- **ShapeShift** — Switch between classification rules under time pressure. Symbol
+  Switch tests letter and number classification, while Arrow + Arithmetic combines
+  visual comparison with parity decisions. Sessions last one to three minutes.
+- **Tower** — Rearrange coloured floors to match a target while following
+  Tower-of-Hanoi movement rules. The minimum solution is shown for practice, and
+  sessions last one to five minutes.
+- **Number Box** — Combine four numbers with addition, subtraction, multiplication,
+  and division to reach a target, using every number exactly once. Sessions last one
+  to five minutes.
+- **Grill Master** — Monitor an increasingly busy grill and pull each piece during its
+  cooked window before it burns. Sessions last one to three minutes.
+- **Balloon** — A Balloon Analogue Risk Task-inspired game where each pump increases
+  potential reward and burst risk. Later phases increase both rewards and penalties.
+  Sessions last one to five minutes.
+- **Figure It Out** — Recreate a hidden figure from aggregate property-match feedback.
+  Shape and colour appear first, with pattern, size, and border introduced as the
+  session progresses. Sessions last one to five minutes.
+
+Code Compare, Digit, and The Switch are planned but not yet available.
+
+## Repository Structure
 
 ```text
-web/
-  index.html                 NeuroPractice game hub
-  games/shapeshift/          Task-switching practice game
-  games/tower/               Tower-of-Hanoi planning practice game
-  games/numberbox/           Four-number arithmetic target game
-  games/grillmaster/         Accelerating grill-management game
-  games/balloon/             BART-style risk and reward game
-  games/figureitout/         Hidden-property deduction game
-web/account/                  Registration and sign-in interface
-web/shared/                   Shared authenticated API client
-web/rankings/                 Daily game-mode leaderboards
-worker/                       Cloudflare Worker API and asset authorization
-migrations/                   Versioned Cloudflare D1 schema
-tests/                        Worker validation and contract tests
-wrangler.jsonc                Workers, assets, and D1 configuration
+Neuro-Practice/
+├── web/                              Static frontend served by Cloudflare
+│   ├── index.html                    Game hub
+│   ├── home.css                      Home-page design
+│   ├── home.js                       Home-page account controls
+│   ├── account/                      Registration and sign-in screen
+│   ├── rankings/                     Daily leaderboard screen
+│   ├── shared/
+│   │   └── auth-client.js            Shared authenticated API client
+│   └── games/
+│       ├── shapeshift/               Task-switching game
+│       ├── tower/                    Planning puzzle
+│       ├── numberbox/                Arithmetic target game
+│       ├── grillmaster/              Divided-attention game
+│       ├── balloon/                  BART-style risk game
+│       └── figureitout/              Hidden-property deduction game
+├── worker/
+│   └── index.js                      Accounts, sessions, history, and ranking APIs
+├── migrations/                       Versioned Cloudflare D1 schema changes
+│   ├── 0001_accounts_and_performances.sql
+│   └── 0002_daily_rankings.sql
+├── tests/
+│   └── worker.test.js                Validation and API-contract unit tests
+├── package.json                      Development, test, migration, and deploy scripts
+├── package-lock.json                 Locked Node.js dependencies
+├── wrangler.jsonc                    Worker, assets, D1, and scheduled-task config
+└── README.md
 ```
 
 ## Run
@@ -28,7 +72,7 @@ wrangler.jsonc                Workers, assets, and D1 configuration
 Requires Node.js 20 or newer.
 
 ```bash
-cd '/Users/seanliew/Documents/AI Memory Workspace/projects/neuropractice'
+cd Neuro-Practice
 npm install
 npm run db:migrate:local
 npm run dev
