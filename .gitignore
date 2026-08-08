@@ -1,7 +1,15 @@
-# Local practice history belongs to the player, not the source repository.
+# Dependencies and local Cloudflare state are regenerated automatically.
+node_modules/
+.wrangler/
+.dev.vars
+
+# Legacy local history files are not part of the deployed account database.
 data/performances.json
 data/performances.tmp
+data/neuropractice.db
 
-# Python cache files are regenerated automatically.
+# Legacy Python environments and caches stay local.
+.env
+.venv/
 __pycache__/
 tests/__pycache__/

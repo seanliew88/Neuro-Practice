@@ -305,7 +305,7 @@ async function finishSession() {
   setControlsDisabled(true);
 
   try {
-    const response = await fetch("/api/performances", {
+    const response = await window.neuroRequest("/api/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -337,11 +337,11 @@ async function finishSession() {
     elements.historyButton.hidden = false;
     await loadHistory();
   } catch (error) {
-    setFeedback(`History was not saved: ${error.message} Restart the Python server and play the session again.`, "bad");
+    setFeedback(`Account history was not saved: ${error.message}`, "bad");
   }
 }
 
-// Exit an unfinished session without writing it to local history.
+// Exit an unfinished session without writing it to account history.
 function quitSession() {
   if (!state.active) return;
   state.active = false;
@@ -368,7 +368,7 @@ function showHome() {
 // Load only Figure It Out records and render selectable tracker rows.
 async function loadHistory() {
   try {
-    const response = await fetch("/api/performances?game=figureitout");
+    const response = await window.neuroRequest("/api/performances?game=figureitout");
     if (!response.ok) throw new Error("History unavailable");
     const { performances } = await response.json();
     state.history = performances;
@@ -379,7 +379,7 @@ async function loadHistory() {
     }).join("") : '<tr><td class="empty-row" colspan="5">No completed Figure It Out sessions yet.</td></tr>';
     elements.historyStatus.textContent = `${performances.length} completed Figure It Out session${performances.length === 1 ? "" : "s"}.`;
   } catch (error) {
-    elements.historyStatus.textContent = "Figure It Out history is unavailable. Restart the Python server.";
+    elements.historyStatus.textContent = "Figure It Out account history is temporarily unavailable.";
   }
 }
 

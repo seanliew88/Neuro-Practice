@@ -354,7 +354,7 @@ async function finishSession() {
   setFeedback(`Session complete: ${state.correct} puzzle${state.correct === 1 ? "" : "s"} solved.`, "success");
 
   try {
-    const response = await fetch("/api/performances", {
+    const response = await window.neuroRequest("/api/performances", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -384,11 +384,11 @@ async function finishSession() {
     elements.historyButton.hidden = false;
     await loadHistory();
   } catch (error) {
-    setFeedback(`History was not saved: ${error.message} Restart the Python server and play the session again.`, "error");
+    setFeedback(`Account history was not saved: ${error.message}`, "error");
   }
 }
 
-// Exit an unfinished session without writing it to local history.
+// Exit an unfinished session without writing it to account history.
 function quitSession() {
   if (!state.active) return;
   state.active = false;
@@ -416,7 +416,7 @@ function showHome() {
 // Load only Number Box records and render selectable tracker rows.
 async function loadHistory() {
   try {
-    const response = await fetch("/api/performances?game=numberbox");
+    const response = await window.neuroRequest("/api/performances?game=numberbox");
     if (!response.ok) throw new Error("History unavailable");
     const { performances } = await response.json();
     state.history = performances;
@@ -426,7 +426,7 @@ async function loadHistory() {
     }).join("") : '<tr><td class="empty-row" colspan="5">No completed Number Box sessions yet.</td></tr>';
     elements.historyStatus.textContent = `${performances.length} completed Number Box session${performances.length === 1 ? "" : "s"}.`;
   } catch (error) {
-    elements.historyStatus.textContent = "Number Box history is unavailable. Restart the Python server.";
+    elements.historyStatus.textContent = "Number Box account history is temporarily unavailable.";
   }
 }
 

@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "neuropractice",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-08-08",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "triggers": {
+    "crons": ["17 3 * * *"]
+  },
+  "assets": {
+    "directory": "./web",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/games/*", "/health"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "neuropractice",
+      "database_id": "e71d2496-f306-42a7-98e5-af3b1c6b4a2a",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

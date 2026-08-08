@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080809" />
+    <title>Account | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="account-shell">
+      <a class="brand" href="/">Neuro<span>Practice</span></a>
+      <section class="account-intro">
+        <p class="eyebrow">Personal practice record</p>
+        <h1>Your sessions.<br /><em>Your progress.</em></h1>
+        <p>Create an account to keep every game's history private and available from any device.</p>
+        <div class="feature-list"><span>6 active games</span><span>Account-only history</span><span>Detailed session metrics</span></div>
+      </section>
+
+      <section class="account-card" aria-labelledby="account-title">
+        <div class="tabs" role="tablist" aria-label="Account action">
+          <button class="tab selected" id="login-tab" type="button" role="tab" aria-selected="true">Sign in</button>
+          <button class="tab" id="register-tab" type="button" role="tab" aria-selected="false">Create account</button>
+        </div>
+        <h2 id="account-title">Welcome back</h2>
+        <p id="account-copy">Continue your NeuroPractice history.</p>
+        <form id="account-form">
+          <label id="name-field" hidden>Display name<input id="display-name" name="displayName" type="text" autocomplete="name" minlength="2" maxlength="40" /></label>
+          <label>Email address<input id="email" name="email" type="email" autocomplete="email" maxlength="254" required /></label>
+          <label>Password<input id="password" name="password" type="password" autocomplete="current-password" minlength="10" maxlength="128" required /></label>
+          <p class="form-note" id="password-note" hidden>Use at least 10 characters.</p>
+          <p class="form-status" id="form-status" aria-live="polite"></p>
+          <button class="submit-button" id="submit-button" type="submit" disabled>Sign in <span>→</span></button>
+        </form>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
