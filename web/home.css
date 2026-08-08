@@ -1,4 +1,4 @@
-:root { --ink: #f8f0eb; --muted: #aba2a0; --base: #080809; --panel: #16161b; --line: #393840; --red: #ec4b44; --amber: #f59a4b; --blue: #65b8d3; --fire: #ff7047; --rose: #ef6f91; --serif: Georgia, "Times New Roman", serif; --sans: "Avenir Next", "Trebuchet MS", sans-serif; }
+:root { --ink: #f8f0eb; --muted: #aba2a0; --base: #080809; --panel: #16161b; --line: #393840; --red: #ec4b44; --amber: #f59a4b; --blue: #65b8d3; --fire: #ff7047; --rose: #ef6f91; --lime: #9fcf67; --serif: Georgia, "Times New Roman", serif; --sans: "Avenir Next", "Trebuchet MS", sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; color: var(--ink); background: radial-gradient(circle at 8% 6%, rgba(236, 75, 68, .24), transparent 24rem), radial-gradient(circle at 92% 88%, rgba(245, 154, 75, .16), transparent 28rem), var(--base); font-family: var(--sans); }
 .shell { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; padding: 5rem 0; }
@@ -18,13 +18,14 @@ header { margin-bottom: 5rem; }
 .game-card.blue:hover { border-color: var(--blue); }
 .game-card.fire:hover { border-color: var(--fire); }
 .game-card.rose:hover { border-color: var(--rose); }
+.game-card.lime:hover { border-color: var(--lime); }
 .game-number { color: var(--muted); font: 1.15rem var(--serif); }
 .game-copy { align-self: end; }
 .game-copy strong, .game-copy small { display: block; }
 .game-copy strong { margin-bottom: .55rem; font: 2rem/1 var(--serif); }
 .game-copy small { color: var(--muted); line-height: 1.45; }
 .arrow { align-self: end; font-size: 2rem; }
-.red .arrow { color: var(--red); }.amber .arrow { color: var(--amber); }.blue .arrow { color: var(--blue); }.fire .arrow { color: var(--fire); }.rose .arrow { color: var(--rose); }
+.red .arrow { color: var(--red); }.amber .arrow { color: var(--amber); }.blue .arrow { color: var(--blue); }.fire .arrow { color: var(--fire); }.rose .arrow { color: var(--rose); }.lime .arrow { color: var(--lime); }
 .up-next { margin-top: 4rem; padding: 2rem; border-left: 3px solid var(--line); color: var(--muted); background: rgba(255,255,255,.025); }
 .up-next h2 { color: var(--ink); }
 .up-next p:last-child { max-width: 680px; margin: 0; line-height: 1.6; }
