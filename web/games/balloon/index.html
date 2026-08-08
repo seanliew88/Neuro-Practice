@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080708" />
+    <title>Balloon | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="back-link" href="/">← NeuroPractice</a>
+        <div><p class="eyebrow">Risk and reward</p><h1>Balloon</h1></div>
+        <div class="masthead-side"><p>Build unbanked value one pump at a time. Cash out before the hidden burst point.</p><button class="history-button" id="history-button" type="button" hidden>Session tracker ↗</button></div>
+      </header>
+
+      <section class="panel setup" id="home-screen" aria-label="Balloon setup">
+        <p class="eyebrow">Session length</p>
+        <h2>Choose your risk window</h2>
+        <div class="duration-options" role="radiogroup" aria-label="Session duration">
+          <button class="duration selected" data-duration="60" type="button" role="radio" aria-checked="true">1 min</button>
+          <button class="duration" data-duration="120" type="button" role="radio" aria-checked="false">2 min</button>
+          <button class="duration" data-duration="180" type="button" role="radio" aria-checked="false">3 min</button>
+          <button class="duration" data-duration="240" type="button" role="radio" aria-checked="false">4 min</button>
+          <button class="duration" data-duration="300" type="button" role="radio" aria-checked="false">5 min</button>
+        </div>
+        <div class="phase-preview" aria-label="Stake progression">
+          <article><span>Early</span><strong>+$0.05</strong><small>No burst penalty</small></article>
+          <article><span>Rising</span><strong>+$0.10</strong><small>−$0.25 on burst</small></article>
+          <article><span>High</span><strong>+$0.20</strong><small>−$0.75 on burst</small></article>
+        </div>
+        <p class="setup-copy">Every balloon has a different hidden limit. A burst always erases that balloon’s unbanked earnings.</p>
+        <button class="primary-button" id="start-button" type="button">Start pumping <span>→</span></button>
+      </section>
+
+      <section id="game-screen" hidden aria-label="Balloon game">
+        <div class="status-row"><span id="timer">01:00</span><span id="bank-total">Bank $0.00</span></div>
+        <section class="panel phase-banner"><div><p class="eyebrow" id="phase-name">Early rounds</p><h2 id="phase-rule">+$0.05 per pump · no burst penalty</h2></div><span id="balloon-count">Balloon 1</span></section>
+        <section class="panel balloon-stage">
+          <div class="round-value"><span>Unbanked</span><strong id="round-value">$0.00</strong></div>
+          <div class="balloon-space" id="balloon-space"><div class="balloon" id="balloon"><span class="balloon-shine"></span></div><div class="balloon-string"></div><div class="burst-mark" id="burst-mark" hidden>POP</div></div>
+          <p class="pump-count" id="pump-count">0 pumps on this balloon</p>
+          <p class="feedback" id="feedback" aria-live="polite">Pump to build value, or bank whenever you choose.</p>
+          <div class="balloon-actions"><button class="pump-button" id="pump-button" type="button">Pump <span id="pump-reward">+$0.05</span></button><button class="cash-button" id="cash-button" type="button" disabled>Cash out <span>Bank $0.00</span></button></div>
+          <button class="quit-button" id="quit-button" type="button">Quit session</button>
+        </section>
+
+        <section class="metrics" aria-label="Live performance">
+          <article><p>Banked</p><strong id="banked">0</strong></article>
+          <article><p>Bursts</p><strong id="bursts">0</strong></article>
+          <article><p>Total pumps</p><strong id="total-pumps">0</strong></article>
+          <article><p>Net earnings</p><strong id="net-earnings">$0.00</strong></article>
+        </section>
+
+        <section class="round-summary panel" id="round-summary" hidden><p class="eyebrow">Session details</p><h2>Session recorded</h2><dl id="summary-details"></dl></section>
+        <div class="end-actions" id="end-actions" hidden><button class="primary-button" id="play-again" type="button">Play again <span>→</span></button><button class="secondary-button" id="return-home" type="button">← Return home</button></div>
+      </section>
+
+      <section class="panel history" id="history-screen" hidden aria-label="Balloon session history">
+        <div class="history-heading"><div><p class="eyebrow">Session tracker</p><h2>Past Balloon sessions</h2></div><button class="secondary-button" id="back-to-home" type="button">← Back to home</button></div>
+        <p id="history-status">Completed Balloon sessions will appear here.</p>
+        <div class="history-wrap"><table><thead><tr><th>Date</th><th>Net</th><th>Banked</th><th>Bursts</th><th></th></tr></thead><tbody id="history-body"></tbody></table></div>
+        <section class="detail-panel" id="history-detail" hidden><p class="eyebrow">Session detail</p><dl id="history-detail-list"></dl></section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

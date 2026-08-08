@@ -100,6 +100,30 @@ class PerformanceValidationTests(unittest.TestCase):
         self.assertEqual(performance["score"], 5)
         self.assertEqual(performance["details"]["peakGrillLoad"], 7)
 
+    # Accept Balloon's banked, burst, pump, and penalty detail metrics.
+    def test_validate_balloon_performance(self) -> None:
+        performance = server.validate_performance({
+            "game": "balloon",
+            "mode": "classic",
+            "durationSeconds": 300,
+            "correct": 7,
+            "total": 10,
+            "details": {
+                "grossBankedCents": 475,
+                "penaltyCents": 125,
+                "lostCents": 210,
+                "totalPumps": 63,
+                "bankedPumps": 44,
+                "maxPumpsBanked": 11,
+                "highestBalloonCents": 90,
+            },
+            "startedAt": "2026-08-08T12:00:00+00:00",
+        })
+
+        self.assertEqual(performance["game"], "balloon")
+        self.assertEqual(performance["details"]["grossBankedCents"], 475)
+        self.assertEqual(performance["accuracy"], 70.0)
+
     # Keep only the most recent fifty sessions in the local JSON file.
     def test_save_performance_limits_history(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

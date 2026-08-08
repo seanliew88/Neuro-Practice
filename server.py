@@ -20,6 +20,7 @@ GAME_RULES = {
     "tower": {"modes": {"tower"}, "durations": {60, 120, 180, 240, 300}},
     "numberbox": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
     "grillmaster": {"modes": {"classic"}, "durations": {60, 120, 180}},
+    "balloon": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
 }
 
 
