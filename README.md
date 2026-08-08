@@ -1,7 +1,7 @@
 # NeuroPractice
 
 NeuroPractice is a local browser collection of cognitive practice games. It currently
-contains ShapeShift for task switching and Tower for planning and constrained movement.
+contains ShapeShift, Tower, and Number Box.
 
 ## Structure
 
@@ -10,6 +10,7 @@ web/
   index.html                 NeuroPractice game hub
   games/shapeshift/          Task-switching practice game
   games/tower/               Tower-of-Hanoi planning practice game
+  games/numberbox/           Four-number arithmetic target game
 data/                         Local, gitignored performance history
 tests/                        Python persistence tests
 server.py                     Dependency-free local server
@@ -34,4 +35,5 @@ summary and a tracker where any saved round can be opened for its full metrics.
 python3 -m unittest discover -s tests -v
 node --check web/games/shapeshift/app.js
 node --check web/games/tower/app.js
+node --check web/games/numberbox/app.js
 ```

@@ -18,6 +18,7 @@ PERFORMANCES_FILE = PROJECT_ROOT / "data" / "performances.json"
 GAME_RULES = {
     "shapeshift": {"modes": {"symbol", "arrow"}, "durations": {60, 120, 180}},
     "tower": {"modes": {"tower"}, "durations": {60, 120, 180, 240, 300}},
+    "numberbox": {"modes": {"classic"}, "durations": {60, 120, 180, 240, 300}},
 }
 
 

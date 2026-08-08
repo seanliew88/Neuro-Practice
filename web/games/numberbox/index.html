@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08090a" />
+    <title>Number Box | NeuroPractice</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="back-link" href="/">← NeuroPractice</a>
+        <div>
+          <p class="eyebrow">Arithmetic flexibility</p>
+          <h1>Number <span>Box</span></h1>
+        </div>
+        <div class="masthead-side">
+          <p>Use all four numbers exactly once. Operations may repeat.</p>
+          <button class="history-button" id="history-button" type="button" hidden>Session tracker ↗</button>
+        </div>
+      </header>
+
+      <section class="panel setup" id="home-screen" aria-label="Number Box setup">
+        <p class="eyebrow">Session length</p>
+        <h2>Choose your practice window</h2>
+        <div class="duration-options" role="radiogroup" aria-label="Session duration">
+          <button class="duration selected" data-duration="60" type="button" role="radio" aria-checked="true">1 min</button>
+          <button class="duration" data-duration="120" type="button" role="radio" aria-checked="false">2 min</button>
+          <button class="duration" data-duration="180" type="button" role="radio" aria-checked="false">3 min</button>
+          <button class="duration" data-duration="240" type="button" role="radio" aria-checked="false">4 min</button>
+          <button class="duration" data-duration="300" type="button" role="radio" aria-checked="false">5 min</button>
+        </div>
+        <p class="setup-copy">Select two values in order, then choose an operation. They immediately collapse into one intermediate value.</p>
+        <button class="primary-button" id="start-button" type="button">Start Number Box <span>→</span></button>
+      </section>
+
+      <section id="game-screen" hidden aria-label="Number Box game">
+        <div class="status-row"><span id="timer">01:00</span><span id="session-score">0 solved</span></div>
+        <section class="panel challenge-panel">
+          <div class="challenge-heading"><p class="eyebrow">Reach the target</p><div class="target" id="target">24</div></div>
+          <p class="selection-guide" id="selection-guide">Select the first value, then the second value.</p>
+          <div class="number-row" id="number-row" aria-label="Current values"></div>
+          <div class="operation-row" id="operation-row" aria-label="Arithmetic operations">
+            <button type="button" data-operation="+" disabled>+</button><button type="button" data-operation="-" disabled>−</button><button type="button" data-operation="*" disabled>×</button><button type="button" data-operation="/" disabled>÷</button>
+          </div>
+          <div class="calculation-trail" id="calculation-trail" aria-label="Calculation trail"></div>
+          <p class="feedback" id="feedback" aria-live="polite">Use all four starting numbers through three operations.</p>
+          <div class="challenge-actions"><button class="text-button" id="reset-button" type="button">Reset this puzzle</button><button class="text-button" id="skip-button" type="button">Show solution and skip</button><button class="text-button" id="quit-button" type="button">Quit session</button></div>
+        </section>
+
+        <section class="metrics" aria-label="Live performance">
+          <article><p>Score</p><strong id="score">0</strong></article>
+          <article><p>Attempts</p><strong id="attempts">0</strong></article>
+          <article><p>Accuracy</p><strong id="accuracy">--</strong></article>
+          <article><p>Streak</p><strong id="streak">0</strong></article>
+        </section>
+
+        <section class="round-summary panel" id="round-summary" hidden><p class="eyebrow">Round details</p><h2>Session recorded</h2><dl id="summary-details"></dl></section>
+        <div class="end-actions" id="end-actions" hidden><button class="primary-button" id="play-again" type="button">Play again <span>→</span></button><button class="secondary-button" id="return-home" type="button">← Return home</button></div>
+      </section>
+
+      <section class="panel history" id="history-screen" hidden aria-label="Number Box session history">
+        <div class="history-heading"><div><p class="eyebrow">Session tracker</p><h2>Past Number Box rounds</h2></div><button class="secondary-button" id="back-to-home" type="button">← Back to home</button></div>
+        <p id="history-status">Completed Number Box rounds will appear here.</p>
+        <div class="history-wrap"><table><thead><tr><th>Date</th><th>Solved</th><th>Accuracy</th><th>Score</th><th></th></tr></thead><tbody id="history-body"></tbody></table></div>
+        <section class="detail-panel" id="history-detail" hidden><p class="eyebrow">Round detail</p><dl id="history-detail-list"></dl></section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

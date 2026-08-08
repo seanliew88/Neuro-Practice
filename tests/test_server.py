@@ -53,6 +53,30 @@ class PerformanceValidationTests(unittest.TestCase):
         self.assertEqual(performance["score"], 1)
         self.assertEqual(performance["details"]["totalMoves"], 21)
 
+    # Accept Number Box timings and puzzle-specific detail metrics.
+    def test_validate_numberbox_performance(self) -> None:
+        performance = server.validate_performance({
+            "game": "numberbox",
+            "mode": "classic",
+            "durationSeconds": 240,
+            "correct": 4,
+            "total": 6,
+            "details": {
+                "skipped": 1,
+                "resets": 2,
+                "bestStreak": 3,
+                "puzzlesSeen": 7,
+                "totalSolveMilliseconds": 28500,
+                "fastestSolveMilliseconds": 4100,
+            },
+            "startedAt": "2026-08-08T12:00:00+00:00",
+        })
+
+        self.assertEqual(performance["game"], "numberbox")
+        self.assertEqual(performance["score"], 2)
+        self.assertEqual(performance["details"]["bestStreak"], 3)
+        self.assertEqual(performance["details"]["resets"], 2)
+
     # Keep only the most recent fifty sessions in the local JSON file.
     def test_save_performance_limits_history(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
